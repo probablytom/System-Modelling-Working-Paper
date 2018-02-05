@@ -10,12 +10,36 @@
 
 \section{Related Literature}
 
+\subsection{Obashi}
+Obashi\cite{ObashiMethodology} is a dataflow modelling methodology and accompanying tool with a focus on dataflow in
+business \& IT. They happen to be our sponsors.\par
+
+Obashi makes the claim that IT exists solely for the purpose of enabling dataflow between business assets. Whether we
+agree with that in all cases, it's a good introduction to the philosophy their framework is based on. Obashi models
+dataflows as a graph, with six types of relations between its elements. Related nodes imply things like functional
+dependancies, dataflow, logical/physical groupings and so on.\par
+
+One of the focuses of Obashi is a simplicity in presentation; some parts of their methodology exist purely for the
+simplification of a display of a system, such as their ``element persistence''. When elements don't exist on a given
+graphical representation, that doesn't imply that they're not still an important part of, or potentially affecting, the
+system in other areas. Using rules like these, Obashi can selectively display subgraphs with contextual meaning, which
+can loosely be thought of as one of Applied Systems Theory's ``aspects''\cite{dekkers:appliedsystemstheory}.
+
+Obashi see dataflow the way some people might see the flow of a commodity such as oil, and like a model of that kind of
+flow, Obashi's useful for things like modelling security, profit, and system improvements. It's also powerful as a way
+to capture and observe system information, without then performing analysis on the captured information. Importantly, an
+Obashi model comprises a metric space where information can be recorded on relationships and elements and then used to
+aggregate and calculate values across a network in the model. Combined with the advantage of actually being capable of
+producing a model via tooling that actually exists (unlike other modelling concepts), Obashi represents modelling that's
+limited in scope (focusing on Business \& IT), but succeeding in pragmatism.
+
 \subsection{Modelling with Bigraphs}
 
 Bigraphs are a modelling technique devised by Robin Milner around 2001. They're a mix of clever category theory for the
 \emph{composition} of systems and graphical/algebraic expressions for the actual construction and engineering of
 systems. A good introduction to them is \cite{milner:bigraphsandtheiralgebra}; the canonical reference is
-\cite{milner:spaceandmotion}.\par
+\cite{milner:spaceandmotion}. Interestingly, while they're sometimes used for system modelling, they're originally
+designed for the study of process calculi.\par
 
 Bigraphs' graphical representation is the easiest to understand; systems which are \emph{spatially} nested are
 represented as nodes of a graph held inside other nodes. Links between these nodes --- usually used to represent a
@@ -98,11 +122,28 @@ Ultimately: it's useful like Haskell's useful. You can do some cool things in it
 you care about that kind of thing, but doing anything large in it would be a nightmare because you'd constantly be
 fighting the formal model that underpins it all. Ever tried Haskell I/O?\par
 
+\subsection{BPMN}
 
-% \subsection{Adaptations in Formal Methods}
-% \subsection{Adaptations in CAS}
-% \subsection{Adaptations in Programs}
-% \subsection{Adaptations in Business Models}
+\subsection{Petri Nets and Process Calculi}
+
+\subsection{Modelling philosophies}
+
+\subsubsection{General Systems Theory}
+\subsubsection{Complex Adaptive Systems}
+\subsubsection{Applied Systems Theory}
+\subsubsection{Agent-based Models}
+\subsubsection{Holon-based Models}
+
+
+\section{Anatomy of a Model}
+% What do these models have in *common*?
+
+\subsection{Temporal Models}
+\subsection{Space \& Relationships}
+\subsection{Motion, Behaviour \& Adaptation}
+\subsection{Representations of Models} % Algebras, graphical representations, maths, code, proprietary tooling, paper...
+                                       % pros and cons of them all.
+
 
 \section{Memo of Understanding} % Any ideas we've had or definitions we've % agreed on and want to record.
 
@@ -111,4 +152,5 @@ fighting the formal model that underpins it all. Ever tried Haskell I/O?\par
 \ldots{}something around adaptation? Modelling adaptation is hard.
 
 \bibliography{lib}
+\bibliographystyle{plain}
 \end{document}
