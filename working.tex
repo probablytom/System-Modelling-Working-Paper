@@ -9,12 +9,45 @@
 
 \section{Related Literature}
 
-\subsection{Adaptations in Formal Methods}
-\subsection{Adaptations in CAS}
-\subsection{Adaptations in Programs}
-\subsection{Adaptations in Business Models}
+\subsection{Modelling with Bigraphs}
+
+Bigraphs are a modelling technique devised by Robin Milner around 2001. They're
+a mix of clever category theory for the \emph{composition} of systems and
+graphical/algebraic expressions for the actual construction and engineering of
+systems. A good introduction to them is \cite{milner:bigraphsandtheiralgebra};
+the canonical reference is \cite{milner:spaceandmotion}.
+
+Bigraphs' graphical representation is the easiest to understand; systems which
+are \emph{spatially} nested are represented as nodes of a graph held inside
+other nodes. Links between these nodes --- usually used to represent a shared
+resource --- are hyperlinks which multiple nodes can share. In this way, the
+graphical representation of a bigraph can show complicated systems with
+intricate dependancies. The way a system changes, referred to as its
+\emph{motion}, is represented outside of the graphical representation of a
+bigraph itself: a bigraph is paired with a library of ``reaction rules'' which
+show how any subsystem of a bigraph can change in a given tick.
+
+(Interestingly, there's an implicit separation of concerns here between a
+system's structure and its behaviour, which is nice\ldots{})
+
+\subsubsection{Some Bi-gripes with Bi-graphs}
+
+% Bigraphs' temporal model is weak!
+
+% They can be clumsy to actually use
+
+% Unclear how you get very detailled statistics in an easy way about a
+% simulation 
+
+
+
+% \subsection{Adaptations in Formal Methods}
+% \subsection{Adaptations in CAS}
+% \subsection{Adaptations in Programs}
+% \subsection{Adaptations in Business Models}
 
 \section{Memo of Understanding} % Any ideas we've had or definitions we've
                                 % agreed on and want to record.
 
+\bibliography{lib.bib}
 \end{document}
