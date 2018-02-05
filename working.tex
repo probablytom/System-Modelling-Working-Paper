@@ -1,6 +1,7 @@
 \documentclass{article}
 
 \title{Working Paper on Practically Modelling Adaptations}
+
 \author{Tim Storer, Tom Wallis}
 
 \begin{document}
@@ -11,34 +12,91 @@
 
 \subsection{Modelling with Bigraphs}
 
-Bigraphs are a modelling technique devised by Robin Milner around 2001. They're
-a mix of clever category theory for the \emph{composition} of systems and
-graphical/algebraic expressions for the actual construction and engineering of
-systems. A good introduction to them is \cite{milner:bigraphsandtheiralgebra};
-the canonical reference is \cite{milner:spaceandmotion}.
+Bigraphs are a modelling technique devised by Robin Milner around 2001. They're a mix of clever category theory for the
+\emph{composition} of systems and graphical/algebraic expressions for the actual construction and engineering of
+systems. A good introduction to them is \cite{milner:bigraphsandtheiralgebra}; the canonical reference is
+\cite{milner:spaceandmotion}.\par
 
-Bigraphs' graphical representation is the easiest to understand; systems which
-are \emph{spatially} nested are represented as nodes of a graph held inside
-other nodes. Links between these nodes --- usually used to represent a shared
-resource --- are hyperlinks which multiple nodes can share. In this way, the
-graphical representation of a bigraph can show complicated systems with
-intricate dependancies. The way a system changes, referred to as its
-\emph{motion}, is represented outside of the graphical representation of a
-bigraph itself: a bigraph is paired with a library of ``reaction rules'' which
-show how any subsystem of a bigraph can change in a given tick.
+Bigraphs' graphical representation is the easiest to understand; systems which are \emph{spatially} nested are
+represented as nodes of a graph held inside other nodes. Links between these nodes --- usually used to represent a
+shared resource --- are hyperlinks which multiple nodes can share. In this way, the graphical representation of a
+bigraph can show complicated systems with intricate dependancies. The way a system changes, referred to as its
+\emph{motion}, is represented outside of the graphical representation of a bigraph itself: a bigraph is paired with a
+library of ``reaction rules'' which show how any subsystem of a bigraph can change in a given tick.\par
 
-(Interestingly, there's an implicit separation of concerns here between a
-system's structure and its behaviour, which is nice\ldots{})
+(Interestingly, there's an implicit separation of concerns here between a system's structure and its behaviour, which is
+nice\ldots{})\par
+
+This representation is backed up by a sophisticated category theoretic foundation; bigraphs are unusual in that they've
+got a nice graphical format but they're actually well founded mathematically. The maths here lets us make compositions
+in well-defined ways. This is actually important mostly for applying the reaction rules. It lets us define subsystems of
+a large system and swap it out for another subsystem in a way that won't break the model (although encoding high-level
+meaning into a bigraphical model sits somewhere on the spectrum of hard and impossible, so the guarantee is really that
+applying the reaction rule is ``safe''; it won't break the ``code'' of the bigraph, and if your reaction rules are sane
+then there should be nothing to worry about. In theory.)\par
+
+Finally, the definitions from the category theory, and the structure implied by the graphical notation, gives a nice
+algebraic format that we can represent. The fact that bigraphs have an algebra is really important, because there's
+scope here to define languages on the algebra like regular languages are defined on the lambda calculus. As an aside,
+bigraphs can also represent calculi like the \(\pi\)-calculus, ambient calculi, and some more systems-y things like
+petri nets. There's potentially scope for some research around developing a high-level bigraph language straight from
+the algrabra, rather than something like BigraphER (Michele's language\cite{michele:bigrapher})
+
+There are other properties of the models --- signatures to identify different ``types'' of node (making a weak type
+system in effect), ports that allow nodes to communicate, and place / link graphs which combine to actually make the
+bigraph --- are best picked up from \cite{milner:bigraphsandtheiralgebra} in my opinion. It's turtles all the way down
+with bigraphs\ldots{}
 
 \subsubsection{Some Bi-gripes with Bi-graphs}
 
 % Bigraphs' temporal model is weak!
+Bigraphs have an implicit temporal model, which is that a reaction rule effectively takes one ``tick'' to complete. This
+feels really incomplete; for a proper systems modelling framework, and one that's pragmatic outside of academic
+interests, we'd need something that can contend with the demands of things like business models where a more robust
+temporal model is crucial.
 
 % They can be clumsy to actually use
+Bigraphs also feel like they'd be really clumsy to use. A part of that is that they've got this rigorous mathematical
+model that you don't want to break, so just saying ``I'll just add this into the model'' like we might with a code-based
+model --- where we actually control the modelling paradigm --- isn't so straightforward. An example is creating what
+I've been referring to as ``metric bigraphs'': bigraphs don't make a metric space, so you can't measure things across
+the hyperlinks and calculate things like times, costs, and distances across nodes. Michele's done some work on this (and
+perplexingly he doesn't think there's much use for it and never published --- I wonder what he's thinking, and whether
+he knows something I don't\ldots{}) and the fact that \emph{there was work to do on it} says a lot about the fact that,
+to make bigraphs \emph{useful}, you seem to need to extend them.\par
 
-% Unclear how you get very detailled statistics in an easy way about a
-% simulation 
+We hit an interesting problem as a result, which is that there's an extension of bigraphs for sharing
+(\cite{michele:sharingbigraphs}), directed bigraphs (\cite{grohmann:directedbigraphs}), and presumably others I haven't
+come across, but there's no guarantee that they're mutually compatible because the underlying formalism to make sure
+everything's tickety-boo hasn't been done! Any extension to bigraphs as a modelling paradigm is either surface-level,
+written in a high level and boiling down to something hacked together with the original formalism --- Michele has a
+turning-reaction-rules-on-and-off thing that works this way in BigraphER with a json API --- or takes a lot of work to
+build on top of the original formalism, and then you lose the benefits of anybody else's work.\par
 
+In short: \emph{They're clumsy.}\par
+
+% Unclear how you get very detailled statistics in an easy way about a % simulation
+Also, a detail of that --- that bigraphs don't make a metric space --- means that collecting meaningful / useful
+statistics about a model is a little trickier than it would be with something like PyDySoFu.\par
+
+Example: what's the implication of a given system change, on average, with regards the latency people using router A
+experience? ``Latency'' isn't really feasible to easily define in the model, and making \emph{calculations} with a value
+like that --- and making future ``decisions'' in the model conditional on that value --- isn't really feasible. It might
+be that we use something like BigraphER's clever json API to turn reaction rules on or off in a higher-level language
+that interfaces with the bigraph, and then constantly rewrite and change some value as the system adapts, turning
+reaction rules on and off to guide the adaptation, but then we've written an entire wrapper around the bigraph model to
+get our stats anyway. It's way better to get the statistics as a part of the underlying model.\par
+
+(Sidenote: maybe there's room, then, to write a high-level modelling paradigm that captures information like that and
+gives us the interface we'd need to a tool like BigraphER, so that more complicated models can be written and we hack
+together the low level stuff as we need to. Michele claims that bigraphs are very fast, ast least his OCaml
+implementation, so that could be feasible. I wonder whether that's a PhD-worthy research project in-and-of
+itself\ldots{}?)\par
+
+% Conclusion: useful, but like Haskell.
+Ultimately: it's useful like Haskell's useful. You can do some cool things in it and it's got some lovely guarantees if
+you care about that kind of thing, but doing anything large in it would be a nightmare because you'd constantly be
+fighting the formal model that underpins it all. Ever tried Haskell I/O?\par
 
 
 % \subsection{Adaptations in Formal Methods}
@@ -46,8 +104,7 @@ system's structure and its behaviour, which is nice\ldots{})
 % \subsection{Adaptations in Programs}
 % \subsection{Adaptations in Business Models}
 
-\section{Memo of Understanding} % Any ideas we've had or definitions we've
-                                % agreed on and want to record.
+\section{Memo of Understanding} % Any ideas we've had or definitions we've % agreed on and want to record.
 
-\bibliography{lib.bib}
+\bibliography{lib}
 \end{document}
