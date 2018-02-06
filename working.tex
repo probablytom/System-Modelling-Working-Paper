@@ -1,8 +1,6 @@
 \documentclass{article}
 
-\title{Working Paper on Practically Modelling Adaptations}
-
-\author{Tim Storer, Tom Wallis}
+\include{preamble}
 
 \begin{document}
 
@@ -36,7 +34,7 @@ limited in scope (focusing on Business \& IT), but succeeding in pragmatism.
 \subsection{Modelling with Bigraphs}
 
 Bigraphs are a modelling technique devised by Robin Milner around 2001. They're a mix of clever category theory for the
-\emph{composition} of systems and graphical/algebraic expressions for the actual construction and engineering of
+\emph{composition} of systems and graphical / algebraic expressions for the actual construction and engineering of
 systems. A good introduction to them is \cite{milner:bigraphsandtheiralgebra}; the canonical reference is
 \cite{milner:spaceandmotion}. Interestingly, while they're sometimes used for system modelling, they're originally
 designed for the study of process calculi.\par
@@ -146,6 +144,16 @@ fighting the formal model that underpins it all. Ever tried Haskell I/O?\par
 
 
 \section{Memo of Understanding} % Any ideas we've had or definitions we've % agreed on and want to record.
+
+\subsection{Terminology}
+
+Some terms:\par
+\begin{description}
+\item[Capturing]\hfill\\ Collecting information about a system and constructing a representative model using it. (Term
+  basically taken from \href{https://gettingthingsdone.com/five-steps/}{the GTD definition})
+\item[Analysing]\hfill\\ Learning something about the captured system by any kind of assessment the modelling
+  environment permits
+\end{description}
 
 \subsection{Our topic}
 
