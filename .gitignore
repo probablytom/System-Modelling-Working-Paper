@@ -9,4 +9,5 @@
 *.gz
 auto/
 _region_.tex
+*.out
 *#*
